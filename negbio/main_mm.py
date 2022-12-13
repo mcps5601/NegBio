@@ -20,6 +20,7 @@ Options:
     --verbose                       Print more information about progress.
 """
 from __future__ import print_function
+from pathlib import Path
 import logging
 import sys
 import os
@@ -89,6 +90,11 @@ def main():
         cuis = None
     else:
         cuis = read_cuis(argv['--cuis'])
+
+    # 我的修改: 如果我給的參數是一個資料夾 (最後1個是slash)
+    if argv['SOURCES'][0][-1] == "/":
+        # 我的修改: 那我就把該資料夾中的檔案都讀進來 (並且檔名有進行排序)
+        argv['SOURCES'] = sorted([str(file) for file in Path(argv['SOURCES'][0]).iterdir()])
 
     if argv['text']:
         collection = text2bioc.text2collection(argv['SOURCES'])

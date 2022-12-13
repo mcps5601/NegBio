@@ -168,7 +168,9 @@ def convert_dg(dependency_graph, text, offset, ann_index=0, rel_index=0, has_lem
         if node.index in annotation_id_map:
             continue
         node_form = node.form
-        index = text.find(node_form, start)
+        # 我的修改: 修正錯誤
+        index = str(text).find(node_form, start)
+
         if index == -1:
             node_form = adapt_value(node.form)
             index = text.find(node_form, start)
